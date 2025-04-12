@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load digitalstore_tags %}
+
+{% block slider %}
+
+
+{% endblock slider %}
+
+
+{% block main %}
+<main class="main">
+    <div class="content_user">
+        <div class="user container">
+            <h3 class="user_room">Личный кабинет</h3>
+            <div class="user_block">
+                <div class="user_img">
+                    {% if request.user.profile.image %}
+                    <img class="user_img img" src="{{ request.user.profile.image.url }}" alt="Аватар">
+                    {% else %}
+                    <img class="user_img img" src="https://www.w3schools.com/howto/img_avatar.png"
+                         alt="Дефолтный аватар">
+                    {% endif %}
+                    <div class="user_name">
+                        <p>{{ request.user.username }}</p>
+                    </div>
+                </div>
+                <form action="{% url 'profile' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="user_info">
+                        <h2 class="user_title">Личные данные</h2>
+                        <ul class="lis__user_info">
+                            <li class="list_user"><p>Имя:</p> <span>{{ request.user.first_name }}</span></li>
+                            <li class="list_user"><p>Фамилия:</p> <span>{{ request.user.last_name }}</span></li>
+                            <li class="list_user"><p>Телефон:</p> <span>{{ request.user.profile.phone_number }}</span>
+                            </li>
+                            <li class="list_user"><p>E-mail:</p> <span>{{ request.user.email }}</span></li>
+                        </ul>
+                    </div>
+                    <a href="{% url 'edit_profile' %}" class="edit_profile">Редактировать</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% with orders|dictsortreversed:"pk"|first as order %}
+    {% if order %}
+    <div class="content_order">
+        <div class="my_orders">
+            <h3>Заказ №: {{ order.pk }}</h3>
+            <img src="{% static 'digitalstore/image/icons/errow_right.svg' %}" alt="" class="errow_down">
+
+            <p>Сумма заказа: {% get_correct order.total_price %} сум</p>
+        </div>
+
+        <ul class="list_orders">
+            {% for item in order.products.all %}
+            <li class="order">
+                <img src="{{ item.photo }}" alt="">
+                <div class="info_order">
+                    <h4 class="product_title">{{ item.product }}</h4>
+                    <div class="color_quantity">
+                        <div class="color"><p>Цвет:</p> <span>{{ item.product.color_name }}</span></div>
+                        <div class="quantity"><p>Кол-во:</p> <span>{{ item.quantity }}</span></div>
+                    </div>
+                </div>
+                <p class="product_price">{% get_correct item.price_in %} сум</p>
+                <div class="data">
+                    <img src="{% static 'digitalstore/image/icons/clarity_date-line.svg' %}" alt="">
+                    <span>{{ order.created_at }}</span>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'orders_list' %}" class="profile_orders_links">Смотреть всё</a>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <div class="content_connect">
+        <p class="content_top_text">Привязка к аккаунтам соцсетей</p>
+        <p class="content_midle_text">Вы можете связать свой профиль с профилями в социальных сетях и сервисах:</p>
+        <div class="list_mail">
+            <img src="{% static 'digitalstore/image/icons/tg.svg' %}" alt="">
+            <img src="{% static 'digitalstore/image/icons/insta.svg' %}" alt="">
+            <img src="{% static 'digitalstore/image/icons/fb.svg' %}" alt="">
+            <img src="{% static 'digitalstore/image/icons/google.svg' %}" alt="">
+        </div>
+    </div>
+</main>
+
+
+{% endblock main %}
+
+

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block slider %}
+
+
+
+
+
+{% endblock slider %}
+
+{% block main %}
+
+
+<main class="main">
+    <div class="content">
+        <div class="container">
+            <h2 class="content__title">{{ title }}</h2>
+            {% if products %}
+            <div class="content__cards">
+
+
+                {% for product in products %}
+                {% include 'digitalstore/components/_card.html' %}
+
+                {% endfor %}
+
+
+            </div>
+            {% else %}
+            <h1 class="not_found">У вас нет избранных товаров</h1>
+            {% endif %}
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+{% endblock main %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

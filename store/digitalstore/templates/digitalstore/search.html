@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load digitalstore_tags %}
+
+{% block slider %}
+
+
+{% endblock slider %}
+
+{% block main %}
+
+<form action="{% url 'search' %}" method="get" enctype="multipart/form-data">
+            <label for="s" class="label_search">
+                <input name="q" id="s" type="text" placeholder="Поиск по товарам" class="serch_in">
+                <button type="submit"><img class="icon_serch"
+                                           src="{% static 'digitalstore/image/icons/Search.svg' %}" alt="">
+                </button>
+            </label>
+        </form>
+
+
+{% endblock main %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

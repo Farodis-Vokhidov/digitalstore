@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load digitalstore_tags %}
+
+
+{% block slider %}
+
+<main class="main">
+
+
+    <div class="content">
+        <div class="container">
+            <div class="my_card_orders">
+                <h3>{{ title }}</h3>
+            </div>
+                {% if order_products %}
+            <div class="total_products_price">
+                <p class="total_products_cart"><span>Общее количество:</span> {{ order_total_quantity }}</p>
+                <p class="total_price_cart"><span>Общая стоимость: </span> {% get_correct order_total_price %} сум</p>
+            </div>
+            <ul class="list_card_orders ">
+
+
+                {% for order_product in order_products %}
+                <li class="order  order_cart">
+                    <div class="info">
+                        <a href="{{ order_product.product.get_absolute_url }}">
+                            <img class="order_cart_img" src="{{ order_product.product.get_first_photo }}" alt="">
+                        </a>
+                        <div class="info_order">
+                            <h4 class="product_title">{{ order_product.product.title }}</h4>
+                            <div class="color_quantity">
+                                <div class="color"><p>Цвет:</p> <span> {{ order_product.product.color_name }}</span>
+                                </div>
+
+                                <div class="quantity"><p>Кол-во:</p> <span> {{ order_product.quantity }}</span>
+
+                                    <div class="plus__minus">
+
+                                        <a href="{% url 'add_or_del' order_product.product.slug 'add' %}">
+                                            <img data-product="id" data-action="add" class="chg-quantity update-cart"
+                                                 src="{% static 'digitalstore/image/icons/arrow-up.png' %}" alt="">
+                                        </a>
+
+                                        <a href="{% url 'add_or_del' order_product.product.slug 'delete' %}">
+                                            <img data-product="id" data-action="remove" class="chg-quantity update-cart"
+                                                 src="{% static 'digitalstore/image/icons/arrow-down.png' %}" alt="">
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="price_cart">
+                        <p class="product_price_title">Стоимость:</p>
+                        {% if order_product.product.discount %}
+                        <span class="old_price">{% get_correct order_product.old_price %} сум</span>
+                        {% endif %}
+                        <span class="price">{% get_correct order_product.get_total_price %} сум</span>
+                    </div>
+
+                    <div class="data_add">
+                        <p class="product_data">Дата добавления:</p>
+                        <div class="data"><img src="{% static 'digitalstore/image/icons/clarity_date-line.svg' %}"
+                                               alt="">
+                            <span>{{ order_product.added_at }}</span>
+                        </div>
+                    </div>
+                    <div class="price_cart">
+                        <p class="product_price_title">Итого:</p>
+                        <p class="product_price">{% get_correct order_product.get_total_price %} сум</p>
+                    </div>
+
+                </li>
+                {% endfor %}
+
+            </ul>
+
+            <div class="order_btns">
+                    <a href="{% url 'delete' order_products.0.pk order_products.0.order.id %}" class="btn_order">Очистить
+                        корзину</a>
+                    <a href="{% url 'checkout' %}" class="btn_order">Оформить заказ</a>
+            </div>
+                {% else %}
+                <h1 class="not_found">У вас нет товаров в корзине.</h1>
+                {% endif %}
+
+        </div>
+    </div>
+
+</main>
+
+{% endblock slider %}
+
+
+{% block main %}
+
+<main class="main">
+    <div class="content">
+        <div class="container">
+            <h2 class="content__title">Специально для вас</h2>
+            {% if products %}
+            <div class="content__cards">
+
+
+                {% for product in products %}
+                {% include 'digitalstore/components/_card.html' %}
+
+                {% endfor %}
+
+
+            </div>
+            {% else %}
+            <h1 class="not_found">Упс! Ничего не найдено.</h1>
+            {% endif %}
+
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+{% endblock main %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

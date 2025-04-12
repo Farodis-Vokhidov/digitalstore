@@ -1,0 +1,62 @@
+{% load static %}
+
+<div class="header_nav_menu">
+    <div class="container">
+        <div class="nav__menu">
+            <ul class="nav__category">
+
+                <li class="dropdown">
+                    <a href="" class="category_burger"><img src="{% static 'digitalstore/image/icons/burger.svg' %}"
+                                                            alt="">
+                        <p class="cat_text">Каталог</p>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+
+                </li>
+
+                {% for category in categories %}
+                <li><a href="{{ category.get_absolute_url }}" class="category"><img src="{{ category.get_icon }}"
+                                                                                    alt="">
+                    <p class="cat_text">{{ category.title }}</p>
+                </a></li>
+                {% endfor %}
+            </ul>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const burgerBtn = document.querySelector('.category_burger');
+        const dropdownMenu = document.querySelector('.dropdown-content');
+
+        burgerBtn.addEventListener('click', (event) => {
+            event.preventDefault(); // Чтобы не перезагружалась страница
+            dropdownMenu.classList.toggle('active');
+        });
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

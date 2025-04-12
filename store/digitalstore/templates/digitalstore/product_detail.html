@@ -1,0 +1,287 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load digitalstore_tags %}
+{% get_same_products product.model as items %}
+{% block slider %}
+
+{% if request.user.is_authenticated %}
+{% get_favorites request.user as favorites %}
+{% endif %}
+
+<div class="content">
+    <div class="container">
+
+        <div class="detail_product">
+            <div class="product_img">
+                <img class="product_img-img" src="{{ product.get_first_photo }}" alt="">
+            </div>
+
+            {% if product.discount %}
+            <p class="detail_discount">
+                -{{ product.discount }}<img src="{% static 'digitalstore/image/icons/Vector.svg' %}" alt="">
+            </p>
+            {% endif %}
+
+            <div class="product_info">
+                <h2 class="title__product">{{ product.title }}</h2>
+                <div class="price_color">
+                    <div class="price_product">
+                        <p>Цена:</p>
+                        <h3 class="product__links_price">
+                            {% if product.discount %}
+                            <span class="old_price">{% get_correct product.price %} сум</span>
+                            {% endif %}
+                            <span>{% get_correct product.get_price %} сум</span>
+                        </h3>
+
+                    </div>
+
+                    <div class="color_product">
+                        <p>Цвет:</p>
+                        <div class="box_color">
+                            <a href="{{ product.get_absolute_url }}" class="color_squer" style="background: {{ product.color_code }};"></a>
+
+                            {% for variant in color_variants %}
+                                <a href="{{ variant.get_absolute_url }}" class="color_squer" style="background: {{ variant.color_code }};"></a>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <li class="paremetes__list-item">
+                    <h3 class="paremeters__list-title">В наличии:</h3>
+                    <a href="" class="paremeters__list-btn"></a>
+                    <div><h2 class="paremeters__count_product">{{ product.quantity }} штук</h2></div>
+                </li>
+
+                <div class="list_button">
+                    <a href="{% url 'add_or_del' product.slug 'add' %}" class="btn btn_cage1"><img src="{% static 'digitalstore/image/icons/cage.svg' %}" alt="">
+                        <span>В корзину</span>
+                    </a>
+
+                    <a href="{% url 'save_favorite' product.slug %}" class="btn btn_cage2"><span>Добавить в избранное</span> </a>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="product_detail_info">
+            <h4 class="title_info">Общие характеристики:</h4>
+            <ul class="list_info">
+                {% if product.title %}
+                <li>
+                    <p class="list_left">Марка и модель</p> <span class="list_right">{{ product.title }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.release_date %}
+                <li>
+                    <p class="list_left">Дата выхода</p> <span class="list_right">{{ product.release_date }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.dimensions %}
+                <li>
+                    <p class="list_left">Размеры (ВxШxГ)</p> <span class="list_right">{{ product.dimensions }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.weight %}
+                <li>
+                    <p class="list_left">Вес (кг)</p> <span class="list_right">{{ product.weight }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.material %}
+                <li>
+                    <p class="list_left">Корпус</p> <span class="list_right">{{ product.material }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.color_name %}
+                <li>
+                    <p class="list_left">Цвет</p> <span class="list_right">{{ product.color_name }}</span>
+                </li>
+                {% endif %}
+
+
+                {% if product.battery %}
+                <li>
+                    <p class="list_left">Аккумулятор</p> <span class="list_right">{{ product.battery }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.screen_technology %}
+                <li>
+                    <p class="list_left">Технология экрана</p> <span
+                        class="list_right">{{ product.screen_technology }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.screen_size %}
+                <li>
+                    <p class="list_left">Размер (Диагональ)</p> <span
+                        class="list_right">{{ product.screen_size }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.main_camera %}
+                <li>
+                    <p class="list_left">Камера заднего, основная</p> <span
+                        class="list_right">{{ product.main_camera }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.front_camera %}
+                <li>
+                    <p class="list_left">Фронтальная камера, селфи</p> <span class="list_right">{{ product.front_camera }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.operating_system %}
+                <li>
+                    <p class="list_left">Операционная система (OS)</p> <span class="list_right">{{ product.operating_system }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.guarantee %}
+                <li>
+                    <p class="list_left">Гарантия</p> <span class="list_right">{{ product.guarantee }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.tv_resolution %}
+                <li>
+                    <p class="list_left">Разрешение экрана</p> <span
+                        class="list_right">{{ product.tv_resolution }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.tv_smart %}
+                <li>
+                    <p class="list_left">Smart TV</p> <span
+                        class="list_right">{{ product.tv_smart }}</span>
+                </li>
+                {% endif %}
+
+
+                {% if product.tv_refresh_rate %}
+                <li>
+                    <p class="list_left">Частота обновления</p> <span
+                        class="list_right">{{ product.tv_refresh_rate }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.fridge_capacity %}
+                <li>
+                    <p class="list_left">Объем холодильной камеры (л)</p> <span class="list_right">{{ product.fridge_capacity }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.freezer_capacity %}
+                <li>
+                    <p class="list_left">Объем морозильной камеры (л)</p> <span class="list_right">{{ product.freezer_capacity }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.energy_class %}
+                <li>
+                    <p class="list_left">Класс энергопотребления</p> <span
+                        class="list_right">{{ product.energy_class }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.fridge_compressor_type %}
+                <li>
+                    <p class="list_left">Тип компрессора</p> <span class="list_right">{{ product.fridge_compressor_type }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.ac_cooling_power %}
+                <li>
+                    <p class="list_left">Мощность охлаждения</p> <span
+                        class="list_right">{{ product.ac_cooling_power }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.coverage_area %}
+                <li>
+                    <p class="list_left">Площадь размещения</p> <span
+                        class="list_right">{{ product.coverage_area }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.maximum_temperature %}
+                <li>
+                    <p class="list_left">Максимальная температура</p> <span class="list_right">{{ product.maximum_temperature }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.minimum_temperature %}
+                <li>
+                    <p class="list_left">Минимальная температура</p> <span class="list_right">{{ product.minimum_temperature }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.ac_heating_power %}
+                <li>
+                    <p class="list_left">Мощность обогрева</p> <span
+                        class="list_right">{{ product.ac_heating_power }}</span>
+                </li>
+                {% endif %}
+
+                {% if product.ac_noise_level %}
+                <li>
+                    <p class="list_left">Уровень шума</p> <span class="list_right">{{ product.ac_noise_level }}</span>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock slider %}
+
+{% block main %}
+
+<main class="main">
+    <div class="content">
+        <div class="container">
+            <h2 class="content__title">Похожие товары</h2>
+            <div class="content__cards">
+
+
+                {% for product in products %}
+                {% include 'digitalstore/components/_card.html' %}
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+{% endblock main %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,56 @@
+{% load static  %}
+{% load i18n %}
+
+
+<div class="nav__header">
+    <div class="container">
+        <div class="nav_info">
+            <div class="nav_left">
+                <div class="languege">
+                    <form action="{% url 'set_language' %}" method="post">
+                        {% csrf_token %}
+                        <select name="language" onchange="this.form.submit()">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </form>
+
+
+                </div>
+                <div class="city">
+                    <select name="brend" class="filter_city">
+                        <option value="Samsung"><a href="" class="lang">Ташкент</a></option>
+                        <option value="Apple"><a href="" class="lang">Самарканд</a></option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="nav_right">
+                {% if not request.user.is_authenticated %}
+                <a href="{% url 'login' %}">Вход</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+                {% else %}
+                <a href="{% url 'logout' %}">Выйти</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+

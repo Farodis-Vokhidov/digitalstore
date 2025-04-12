@@ -1,0 +1,67 @@
+{% load static %}
+{% load digitalstore_tags %}
+
+{% if request.user.is_authenticated %}
+{% get_favorites request.user as favorites %}
+{% endif %}
+
+
+<div class="card">
+    {% if product.discount %}
+    <p class="product_discount">
+        -{{ product.discount }}<img src="{% static 'digitalstore/image/icons/Vector.svg' %}" alt="">
+    </p>
+    {% endif %}
+    <a href="{{ product.get_absolute_url }}">
+
+
+        <div class="card_img">
+            <img src="{{ product.get_first_photo }}" alt="" class="image_good">
+        </div>
+        <p class="card_title">{{ product.title }}</p>
+        <div class="card_price">
+            <p class="price">
+                {% get_correct product.get_price %} сум
+                {% if product.discount %}
+                <span class="old_price">{% get_correct product.price %} сум</span>
+                {% endif %}
+            </p>
+        </div>
+    </a>
+    {% if product.quantity %}
+    <div class="card_button">
+        <a class="btn_card" href="{% url 'add_or_del' product.slug 'add' %}"><img src="{% static 'digitalstore/image/icons/cage.svg' %}" alt=""> <span
+                class="btn_text">В корзину</span> </a>
+    {% else %}
+    <div class="card_button">
+        <p class="btn_text">Нет в наличии</p>
+    {% endif %}
+
+        <a href="{% url 'save_favorite' product.slug %}"
+           class="link_fav {% if product in favorites %}active{% endif %}">
+            <svg width="28" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="favorite-icon">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                      stroke="#0F2859" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

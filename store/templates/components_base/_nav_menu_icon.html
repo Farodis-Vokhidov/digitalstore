@@ -1,0 +1,89 @@
+{% load static %}
+
+<div class="nav_menu_icon container">
+    <div class="nav__top">
+        <a href="{% url 'main' %}" class="logo">
+            <img src="{% static 'digitalstore/image/logo/logo store 2.svg' %}" alt="">
+        </a>
+        <form action="{% url 'search' %}" method="get" enctype="multipart/form-data">
+            <label for="s" class="label_search">
+                <input name="q" id="s" type="text" placeholder="Поиск по товарам" class="serch_in" value="{{ request.GET.q }}">
+                <button type="submit"><img class="icon_serch"
+                                           src="{% static 'digitalstore/image/icons/Search.svg' %}" alt="">
+                </button>
+            </label>
+        </form>
+
+        <div class="nav_icon">
+            <ul class="icon">
+                <li><a href="{% url 'favorites' %}" class="click_icon"><img
+                        src="{% static 'digitalstore/image/icon_header/Group 524.svg' %}" alt=""></a></li>
+                <li><a href="{% url 'my_cart' %}" class="click_icon"><img
+                        src="{% static 'digitalstore/image/icon_header/bi_cart3 (1).svg' %}" alt=""></a>
+                </li>
+                <li><a href="{% url 'profile' %}" class="click_icon"><img
+                        src="{% static 'digitalstore/image/icon_header/Group 522 (1).svg' %}" alt=""></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#!" class="category_burger"><img
+                            src="{% static 'digitalstore/image/icons/burger.svg' %}" alt="">
+                    </a>
+                    <div class="dropdown-content">
+                        <ul class="list_burger">
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/washing.svg' %}" alt="">
+                                <span class="burger_text">Техника для дома</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/printer.svg' %}" alt="">
+                                <span class="burger_text">Офисная техника</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/condition.svg' %}"
+                                    alt=""> <span class="burger_text">Климатическая техника</span></a>
+                            </li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/tv.svg' %}" alt=""> <span
+                                    class="burger_text">Телевизоры</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/phone.svg' %}" alt="">
+                                <span class="burger_text">Телефоны и гаджеты</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/komputer.svg' %}" alt="">
+                                <span class="burger_text">Компьтеры и ноутбуки</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/photo.svg' %}" alt="">
+                                <span class="burger_text">Фото и видео</span></a></li>
+                            <li class="burger_list"><a href=""><img
+                                    src="{% static 'digitalstore/image/icon_burger/fan.svg' %}" alt="">
+                                <span class="burger_text">Красота и здоровье</span></a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const burgerBtn = document.querySelector('.category_burger');
+    const dropdownMenu = document.querySelector('.dropdown-content');
+
+    burgerBtn.addEventListener('click', (event) => {
+        event.preventDefault(); // Чтобы не перезагружалась страница
+        dropdownMenu.classList.toggle('active');
+    });
+
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (event) => {
+        if (!burgerBtn.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('active');
+        }
+    });
+});
+</script>
+
+
+

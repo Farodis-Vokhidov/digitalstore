@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block slider %}
+{% endblock slider %}
+
+{% block main %}
+<main class="main">
+    <div class="content">
+        <div class="container">
+            <h2 class="login_title">Редактировать профиль</h2>
+            <div class="login_content">
+                <div class="login">
+                    <div class="login_form">
+                        <form action="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="current_photo">Ваш юзернейм</label>
+                                {{ account_form.username }}
+                            </div>
+                            <div class="form-group">
+                                <label class="current_photo">Ваше имя</label>
+                                {{ account_form.first_name }}
+                            </div>
+                            <div class="form-group">
+                                <label class="current_photo">Ваша фамилия</label>
+                                {{ account_form.last_name }}
+                            </div>
+                            <div class="form-group">
+                                <label class="current_photo">Ваша почта</label>
+                                {{ account_form.email }}
+                            </div>
+                            <div class="form-group">
+                                <label class="current_photo">Ваш номер телефона</label>
+                                {{ profile_form.phone_number }}
+                            </div>
+                            <div class="form-group">
+                                <label class="current_photo">Текущая фотография профиля</label>
+                                <img class="user_img-img_edit" src="{{ request.user.profile.image.url }}" alt="Аватар">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="current_photo">Выберите новый аватар</label>
+                                {{ profile_form.image }}
+                            </div>
+                            <button class="btn btn-register" type="submit">Сохранить</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="register_info">
+                    <a href="{% url 'profile' %}" class="btn-to_login">Вернутся назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load digitalstore_tags %}
+
+{% block slider %}
+{% endblock slider %}
+
+{% block main %}
+<a href="{% url 'profile' %}" class="back-button">← Вернуться назад</a>
+<h2 class="latest_orders_title">Мои заказы</h2>
+
+{% for order in orders %}
+<div class="content_order">
+    <div class="my_orders">
+        <h3>Заказ №: {{ order.pk }}</h3>
+        <img src="{% static 'digitalstore/image/icons/errow_right.svg' %}" alt="" class="toggle-order">
+        <p>Сумма заказа: {% get_correct order.total_price %} сум</p>
+    </div>
+
+    <ul class="latest_orders order-content">
+        {% for item in order.products.all %}
+        <li class="order">
+            <img src="{{ item.photo }}" alt="">
+            <div class="info_order">
+                <h4 class="product_title">{{ item.product }}</h4>
+                <div class="color_quantity">
+                    <div class="color"><p>Цвет:</p> <span>{{ item.product.color_name }}</span></div>
+                    <div class="quantity"><p>Кол-во:</p> <span>{{ item.quantity }}</span></div>
+                </div>
+            </div>
+            <p class="product_price">{% get_correct item.price_in %} сум</p>
+            <div class="data">
+                <img src="{% static 'digitalstore/image/icons/clarity_date-line.svg' %}" alt="">
+                <span>{{ order.created_at }}</span>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% empty %}
+<p>У вас пока нет заказов.</p>
+{% endfor %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let buttons = document.querySelectorAll(".toggle-order"); // Исправлено
+
+    console.log("Найдено кнопок:", buttons.length); // Проверка
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            console.log("Клик по кнопке"); // Проверка клика
+
+            let orderContent = this.closest(".content_order").querySelector(".order-content");
+            if (!orderContent) {
+                console.error("Не найден .order-content");
+                return;
+            }
+
+            let isVisible = orderContent.style.display === "block";
+            orderContent.style.display = isVisible ? "none" : "block";
+            this.classList.toggle("active", !isVisible);
+        });
+    });
+});
+</script>
+
+
+{% endblock main %}
