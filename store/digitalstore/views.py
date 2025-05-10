@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .utils import CartForAuthenticatedUser, get_cart_data
 import stripe
-from store.settings import STRIPE_SECRET_KEY
+from config.settings import STRIPE_SECRET_KEY
 from django.contrib.auth.decorators import login_required
 from .mixins import CategoryMixin
 
